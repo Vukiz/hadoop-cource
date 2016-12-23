@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.*;
 
 
-import rstm.hadoop_course.TextIntWritable;
+import pryazhennikov.hadoop_course.TextIntWritable;
 
 
 
@@ -45,23 +45,11 @@ public class HadoopDriver extends Configured implements Tool {
 
         job.waitForCompletion(true);
 
-
-
-
-
-
-
-
-
-
         Job job2 = Job.getInstance(getConf());
         job2.setJarByClass(HadoopDriver.class);
         job2.setJobName("Sorting");
         job2.setMapperClass(Mapper2.class);
         job2.setReducerClass(Reducer2.class);
-
-        //job2.setMapOutputKeyClass(TextIntWritable.class);
-        //job2.setMapOutputValueClass(Text.class);
         job2.setMapOutputKeyClass(TextIntWritable.class);
         job2.setMapOutputValueClass(Text.class);
 
@@ -70,9 +58,7 @@ public class HadoopDriver extends Configured implements Tool {
         FileInputFormat.addInputPath(job2, new Path(args[1]));
         FileOutputFormat.setOutputPath(job2, new Path(args[2]));
 
-        return job2.waitForCompletion(true)?0:1;
-
-
+        return job2.waitForCompletion(true) ? 0 : 1;
     }
 
 }

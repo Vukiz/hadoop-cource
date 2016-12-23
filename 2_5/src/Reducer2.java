@@ -7,7 +7,7 @@ import org.apache.hadoop.util.*;
 import java.io.*;
 import java.util.*;
 
-import rstm.hadoop_course.TextIntWritable;
+import pryazhennikov.hw.2_5.src.TextIntWritable;;
 
 
 public class Reducer2
@@ -17,13 +17,8 @@ public class Reducer2
             throws IOException, InterruptedException
     {
 
-        for (Text text : values){
-
+        for (Text text : values) {
             context.write(text, key);
-
         }
-
-
     }
 }
-

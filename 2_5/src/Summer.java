@@ -7,7 +7,7 @@ import org.apache.hadoop.util.*;
 import java.io.*;
 import java.util.*;
 
-import rstm.hadoop_course.TextIntWritable;
+import pryazhennikov.hw.2_5.src.TextIntWritable;;
 
 
 public class Summer
@@ -16,28 +16,27 @@ extends Reducer<Text, Text, Text, TextIntWritable>
     public void reduce(Text key, Iterable<Text> values, Context context)
 	throws IOException, InterruptedException
 	{
+        HashMap<Text, Integer>  prev_cur_map = new HashMap();
+        Integer count;
 
-        //hashmap
-
-        HashMap<Text, Integer>  map = new HashMap();
-        Integer number;
         for(Text val :values)
         {
-            number = map.get(val);
-            if (number == null) map.put(val, new Integer(1));
-            else map.put(val, number+1);
+            count = prev_cur_map.get(val);
+            if (count == null) prev_cur_map.put(val, new Integer(1));
+            else prev_cur_map.put(val, count + 1);
         }
 
         Text maxText = new Text("");
-        number = 0;
-        for (Map.Entry<Text, Integer> entry : map.entrySet()){
-            if ( entry.getValue() > number ) {
-                number = entry.getValue();
+        count = 0;
+        for (Map.Entry<Text, Integer> entry : prev_cur_map.entrySet()){
+            if ( entry.getValue() > count ) {
+                count = entry.getValue();
                 maxText = entry.getKey();
             }
         }
 
-        TextIntWritable tmp = new TextIntWritable(maxText.toString(), number.intValue() );
-        context.write(key, tmp);
+        TextIntWritable word_freq_str = new TextIntWritable(maxText.toString(),
+                                                            count.intValue());
+        context.write(key, word_freq_str);
     }
 }
