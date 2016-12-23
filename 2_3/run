@@ -2,12 +2,13 @@
 inputdir="/datasets/text"
 gluster="/mnt/root"
 prefix="output-"
+name="z2-3"
 lastnum=$(ls $gluster$HOME |
 sed -rne 's:output-([0-9]+):\1:p' |
 sort -n |
 tail -n1)
 newnum=$(expr $lastnum \+ 1)
-outputdir="$HOME/$prefix$newnum"
+outputdir="$HOME/$prefix$name"
 echo "Input dir: $inputdir"
 echo "Output dir: $outputdir"
 hadoop-submit --jar build/wordcount.jar -- \

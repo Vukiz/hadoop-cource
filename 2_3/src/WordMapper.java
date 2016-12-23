@@ -25,8 +25,7 @@ extends Mapper<Object, Text, Text, Text>
 
         String[] strings = value.toString().split("\\p{Punct}\\s|\\n");
 
-
-        for (int i = 0; i<strings.length; ++i) {
+        for (int i = 0; i < strings.length; ++i) {
             Reader reader = new StringReader(strings[i]);
             Analyzer analyzer = new StandardAnalyzer();
 
@@ -34,30 +33,25 @@ extends Mapper<Object, Text, Text, Text>
 
             stream.reset();
 
+            String prev_word;
+            String cur_word;
 
-            String prev;
-            String cur;
-            if (stream.incrementToken()){
-                prev = stream
+            if (stream.incrementToken()) {
+                prev_word = stream
                         .getAttribute(CharTermAttribute.class)
                         .toString();
                 while (stream.incrementToken()) {
-                    cur = stream
+                    cur_word = stream
                             .getAttribute(CharTermAttribute.class)
                             .toString();
-                    //?
-                    context.write(new Text(prev), new Text(cur));
-                    prev = cur;
+
+                    context.write(new Text(prev_word), new Text(cur_word));
+                    prev_word = cur_word;
                 }
             }
 
-
             stream.end();
             stream.close();
-
-
         }
-
     }
-
 }

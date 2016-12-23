@@ -15,23 +15,22 @@ extends Reducer<Text, Text, Text, Text>
     public void reduce(Text key, Iterable<Text> values, Context context)
 	throws IOException, InterruptedException
 	{
-
-        //hashmap
-
-        HashMap<Text, Integer>  map = new HashMap();
-        Integer number;
-        for(Text val :values)
+        HashMap<Text, Integer>  prev_cur_map = new HashMap();
+        Integer count;
+        for (Text val : values)
         {
-            number = map.get(val);
-            if (number == null) map.put(val, new Integer(1));
-            else map.put(val, number+1);
+            count = prev_cur_map.get(val);
+            if (count == null)
+                prev_cur_map.put(val, new Integer(1));
+            else
+                prev_cur_map.put(val, count + 1);
         }
 
         Text maxText = new Text("");
-        number = 0;
-        for (Map.Entry<Text, Integer> entry : map.entrySet()){
-            if ( entry.getValue() > number ) {
-                number = entry.getValue();
+        count = 0;
+        for (Map.Entry<Text, Integer> entry : prev_cur_map.entrySet()) {
+            if (entry.getValue() > count) {
+                count = entry.getValue();
                 maxText = entry.getKey();
             }
         }

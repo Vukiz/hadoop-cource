@@ -11,16 +11,12 @@ import org.apache.lucene.analysis.tokenattributes.*;
 import java.io.*;
 import java.util.*;
 
-
-
 public class WordMapper
         extends Mapper<Object, Text, IntWritable, IntWritable>
 {
     public void map(Object key, Text value, Context context)
             throws IOException, InterruptedException
     {
-
-        //abstract
         Reader reader = new StringReader(value.toString());
         Analyzer analyzer = new StandardAnalyzer();
 
@@ -33,16 +29,8 @@ public class WordMapper
                     .toString();
             context.write(new IntWritable(token.length()), new IntWritable(1));
         }
+
         stream.end();
         stream.close();
-
-        /*
-		StringTokenizer tokenizer = new StringTokenizer(value.toString());
-        while (tokenizer.hasMoreTokens()) {
-			String token = tokenizer.nextToken();
-            context.write(new Text(token), new IntWritable(1));
-        }
-        */
     }
-
 }
