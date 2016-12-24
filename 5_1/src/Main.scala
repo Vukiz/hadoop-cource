@@ -37,10 +37,12 @@ object Main {
 		.reduceByKey((a,b) => a+b)
 		.sortBy(_._2, false)
 		.first()
+		// ((a, b), 2)
 
 		val rdd = sc
 		.parallelize(Array(maxEl._1))
-		.map(it => it mkString " ")
+		// (a, b)
+		.map(it => it.mkString(" "))
 		.saveAsTextFile(outputDir)
 	}
 }
