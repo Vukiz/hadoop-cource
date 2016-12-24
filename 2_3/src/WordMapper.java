@@ -17,12 +17,10 @@ import java.util.*;
 public class WordMapper
 extends Mapper<Object, Text, Text, Text>
 {
-
-
     public void map(Object key, Text value, Context context)
 	throws IOException, InterruptedException
 	{
-
+        // \p{Punct} Punctuation: One of !"#$%&'()*+,-./:;<=>?@[\]^_{|}~`
         String[] strings = value.toString().split("\\p{Punct}\\s|\\n");
 
         for (int i = 0; i < strings.length; ++i) {

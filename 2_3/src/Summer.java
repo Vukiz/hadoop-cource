@@ -15,26 +15,26 @@ extends Reducer<Text, Text, Text, Text>
     public void reduce(Text key, Iterable<Text> values, Context context)
 	throws IOException, InterruptedException
 	{
-        HashMap<Text, Integer>  prev_cur_map = new HashMap();
+        HashMap<Text, Integer> hash_map = new HashMap();
         Integer count;
         for (Text val : values)
         {
-            count = prev_cur_map.get(val);
+            count = hash_map.get(val);
             if (count == null)
-                prev_cur_map.put(val, new Integer(1));
+                hash_map.put(val, new Integer(1));
             else
-                prev_cur_map.put(val, count + 1);
+                hash_map.put(val, count + 1);
         }
 
-        Text maxText = new Text("");
+        Text max_repeated_word = new Text("");
         count = 0;
-        for (Map.Entry<Text, Integer> entry : prev_cur_map.entrySet()) {
+        for (Map.Entry<Text, Integer> entry : hash_map.entrySet()) {
             if (entry.getValue() > count) {
                 count = entry.getValue();
-                maxText = entry.getKey();
+                max_repeated_word = entry.getKey();
             }
         }
 
-        context.write(key, maxText);
+        context.write(key, max_repeated_word);
     }
 }
