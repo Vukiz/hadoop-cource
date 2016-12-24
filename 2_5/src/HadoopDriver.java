@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.*;
 
 
-import pryazhennikov.hadoop_course.TextIntWritable;
+import pryazhennikov.hw.2_5.src.TextIntWritable;
 
 
 
