@@ -61,7 +61,9 @@ public class SpectrumRecordReader extends RecordReader<Text, RawSpectrum> {
             GZIPInputStream gzipInputStream = new GZIPInputStream(inputStream);
             LineReader reader = new LineReader(gzipInputStream, context.getConfiguration());
 
+            // Проверяем, подходил ли файл под наш паттерн
             Matcher fileNameMatcher = RawSpectrum.FILENAME_PATTERN.matcher(paths[i].getName());
+
             if (fileNameMatcher.matches()) {
                 Text line = new Text();
                 Matcher lineMatcher;
@@ -154,7 +156,7 @@ public class SpectrumRecordReader extends RecordReader<Text, RawSpectrum> {
                 rawSpectrum.setField("d", vars_data_map.get("d").get(entry.getKey()));
             }
         }
-        return found;
 
+        return found;
     }
 }
