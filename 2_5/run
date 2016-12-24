@@ -3,14 +3,13 @@ inputdir="/datasets/text"
 gluster="/mnt/root"
 prefix="output-"
 prefix2="intermediate-"
-name="z2-5"
 lastnum=$(ls $gluster$HOME |
 sed -rne 's:output-([0-9]+):\1:p' |
 sort -n |
 tail -n1)
 newnum=$(expr $lastnum \+ 1)
-intermediate="$HOME/$prefix2$name"
-outputdir="$HOME/$prefix$name"
+intermediate="$HOME/$prefix2$newnum"
+outputdir="$HOME/$prefix$newnum"
 echo "Input dir: $inputdir"
 echo "Intermediarte dir: $intermediate"
 echo "Output dir: $outputdir"

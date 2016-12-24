@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.*;
 
 public class Mapper2
-        extends Mapper<LongWritable, Text, TextIntWritable,Text> {
+        extends Mapper<LongWritable, Text, TextIntWritable, Text> {
 
     public void map(LongWritable key, Text value, Context context)
             throws IOException, InterruptedException {

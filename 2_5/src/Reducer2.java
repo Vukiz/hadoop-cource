@@ -7,9 +7,6 @@ import org.apache.hadoop.util.*;
 import java.io.*;
 import java.util.*;
 
-import pryazhennikov.hw.2_5.src.TextIntWritable;
-
-
 public class Reducer2
         extends Reducer<TextIntWritable, Text, Text, TextIntWritable>
 {

@@ -10,8 +10,7 @@ import java.io.*;
 import java.util.*;
 
 
-import pryazhennikov.hw.2_5.src.TextIntWritable;
-
+import pryazhennikov.hadoop_course.TextIntWritable;
 
 
 public class HadoopDriver extends Configured implements Tool {

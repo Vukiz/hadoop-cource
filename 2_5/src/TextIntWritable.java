@@ -1,4 +1,4 @@
-package pryazhennikov.hw.2_5.src;
+package pryazhennikov.hadoop_course;
 
 import java.io.*;
 import org.apache.hadoop.io.*;
@@ -28,22 +28,20 @@ public class TextIntWritable implements Writable {
         return (word + ": " + Integer.toString(frequency));
     }
 
-    public int compareTo( TextIntWritable tmp ) {
+    public int compareTo(TextIntWritable tmp) {
         int result;
-        if ( tmp == null )
+        if ( tmp == null ) {
             throw new NullPointerException();
-        else
-            if(!(tmp instanceof TextIntWritable))
+        } else {
+            if(!(tmp instanceof TextIntWritable)) {
                 throw new ClassCastException();
-            else {
+            } else {
                 TextIntWritable tmp2 = (TextIntWritable)tmp;
-                if (this.frequency > tmp2.frequency)
-                   result = -1;
-                else if (this.frequency == tmp2.frequency)
-                    result = 0;
-                else
-                    result = 1;
+                if (this.frequency > tmp2.frequency) result = -1;
+                else if (this.frequency == tmp2.frequency) result = 0;
+                else result = 1;
             }
+        }
         return result;
     }
 

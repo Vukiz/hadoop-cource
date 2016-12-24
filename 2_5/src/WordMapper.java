@@ -17,8 +17,6 @@ import java.util.*;
 public class WordMapper
 extends Mapper<Object, Text, Text, Text>
 {
-
-
     public void map(Object key, Text value, Context context)
 	throws IOException, InterruptedException
 	{
