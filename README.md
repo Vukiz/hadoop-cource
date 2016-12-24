@@ -95,4 +95,4 @@ $ ./run
 
 ## Логи аутпута
 
-Логи все можно найти в `/mnt/root/pryazhennikov/output`
+Логи все можно найти в `/mnt/root/home/pryazhennikov/output-z${номер задачи}`
