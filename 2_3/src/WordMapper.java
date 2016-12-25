@@ -17,39 +17,50 @@ import java.util.*;
 public class WordMapper
 extends Mapper<Object, Text, Text, Text>
 {
+    @Override
+    public void run(Context context) throws IOException, InterruptedException {
+		StringBuilder stringBuilder = new StringBuilder();
+        while (context.nextKeyValue()) {
+            stringBuilder.append(" ").append(context.getCurrentValue().toString());
+            String[] split = stringBuilder.toString().split("\\p{Punct}\\s*");
+            if (split.length > 1) {
+                for (int i = 0; i < split.length - 1; i++) {
+                    map(context.getCurrentKey(), new Text(split[i]), context);
+                }
+                stringBuilder = new StringBuilder(split[split.length - 1]);
+            }
+        }
+        map(new Object(), new Text(stringBuilder.toString()), context);
+    }
+
     public void map(Object key, Text value, Context context)
 	throws IOException, InterruptedException
 	{
-        // \p{Punct} Punctuation: One of !"#$%&'()*+,-./:;<=>?@[\]^_{|}~`
-        String[] strings = value.toString().split("\\p{Punct}\\s|\\n");
+        Reader reader = new StringReader(value.toString());
+        Analyzer analyzer = new StandardAnalyzer();
 
-        for (int i = 0; i < strings.length; ++i) {
-            Reader reader = new StringReader(strings[i]);
-            Analyzer analyzer = new StandardAnalyzer();
+        TokenStream stream = analyzer.tokenStream(null, reader);
 
-            TokenStream stream = analyzer.tokenStream(null, reader);
+        stream.reset();
 
-            stream.reset();
+        String prev_word;
+        String cur_word;
 
-            String prev_word;
-            String cur_word;
+        if (stream.incrementToken()) {
+            prev_word = stream
+                    .getAttribute(CharTermAttribute.class)
+                    .toString();
+            while (stream.incrementToken()) {
+                cur_word = stream
+                    .getAttribute(CharTermAttribute.class)
+                    .toString();
 
-            if (stream.incrementToken()) {
-                prev_word = stream
-                        .getAttribute(CharTermAttribute.class)
-                        .toString();
-                while (stream.incrementToken()) {
-                    cur_word = stream
-                            .getAttribute(CharTermAttribute.class)
-                            .toString();
-
-                    context.write(new Text(prev_word), new Text(cur_word));
-                    prev_word = cur_word;
-                }
+                context.write(new Text(prev_word), new Text(cur_word));
+                prev_word = cur_word;
             }
-
-            stream.end();
-            stream.close();
         }
+
+        stream.end();
+        stream.close();
     }
 }
